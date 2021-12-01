@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+    nginx:
+        image: nginx:alpine
+        container_name: nginx
+        restart: unless-stopped
+        ports:
+            - ${APP_PORT}:80
+        depends_on:
+            - php
+        links:
+            - php
+        volumes:
+            - ./:/var/www
+            - ./.docker/nginx/conf.d/app.conf:/etc/nginx/conf.d/default.conf
+        networks:
+            app-net:
+                ipv4_address: 172.10.0.5
+
+    php:
+        build:
+            context: .
+            dockerfile: .docker/Dockerfile
+        image: php:8.1-fpm
+        container_name: php
+        tty: true
+        working_dir: /var/www
+        environment:
+            SERVICE_NAME: app
+            SERVICE_TAGS: dev
+        volumes:
+            -   ./:/var/www
+        depends_on:
+            - postgres
+        links:
+            - postgres
+        networks:
+            app-net:
+                ipv4_address: 172.10.0.6
+
+    postgres:
+        image: postgres:13.3
+        container_name: postgres
+        environment:
+            POSTGRES_DB: anime_list
+            POSTGRES_USER: ${DB_USERNAME}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            PGDATA: "/var/lib/postgresql/data/pgdata"
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_PASSWORD}"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+            start_period: 10s
+        restart: unless-stopped
+        networks:
+            app-net:
+                ipv4_address: 172.10.0.7
+
+    phpmyadmin:
+        image: phpmyadmin
+        container_name: phpmyadmin
+        links:
+            - postgres
+        ports:
+            - "8000:80"
+        environment:
+            - PMA_ARBITRARY=1
+        networks:
+            app-net:
+               ipv4_address: 172.10.0.8
+
+volumes:
+    pgdata:
+        driver: local
+
+networks:
+    app-net:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.10.0.0/16
