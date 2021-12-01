@@ -17,13 +17,14 @@ class CreateAnimesTable extends Migration
             $table->id();
             $table->integer('episodes');
             $table->text('status');
-            $table->json('licensors');
+            $table->foreignId('licensors')->constrained('licensors');
             $table->json('genres');
             $table->decimal('rating');
             $table->text('season');
             $table->text('type');
-            $table->json('produsers');
-            $table->json('studios');
+            $table->foreignId('producers')->constrained('producers');
+            $table->foreignId('studios')->constrained('studios');
+            $table->text('image');
             $table->timestamps();
         });
     }
