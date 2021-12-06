@@ -62,18 +62,25 @@ services:
             app-net:
                 ipv4_address: 172.10.0.7
 
-    phpmyadmin:
-        image: phpmyadmin
-        container_name: phpmyadmin
+    adminer:
+        image: adminer
+        container_name: adminer
+        depends_on:
+            -   postgres
         links:
-            - postgres
+            -   postgres
+        restart: always
         ports:
-            - "8000:80"
+            - 8080:9000
         environment:
-            - PMA_ARBITRARY=1
+            ADMINER_DEFAULT_DB_DRIVER: pgsql
+            ADMINER_DEFAULT_DB_HOST: postgres
+            ADMINER_DEFAULT_DB_NAME: anime_list
+            ADMINER_DESIGN: pepa-linha-dark
+            ADMINER_PLUGINS: tables-filter tinymce
         networks:
             app-net:
-               ipv4_address: 172.10.0.8
+                ipv4_address: 172.10.0.10
 
 volumes:
     pgdata:

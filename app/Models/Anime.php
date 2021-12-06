@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,22 +9,24 @@ class Anime extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     protected $casts = [
-        'genres' => AsArrayObject::class,
+        'genres' => 'array',
     ];
 
     public function licensors()
     {
-        return $this->belongsToMany(Licensor::class);
+        return $this->belongsTo(Licensor::class, 'licensor');
     }
 
     public function producers()
     {
-        return $this->belongsToMany(Producer::class);
+        return $this->belongsTo(Producer::class, 'producer');
     }
 
     public function studios()
     {
-        return $this->belongsToMany(Studio::class);
+        return $this->belongsTo(Studio::class, 'studio');
     }
 }

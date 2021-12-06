@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Countries;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,7 @@ class CreateLicensorTable extends Migration
             $table->id();
             $table->text('name');
             $table->text('image');
-            $table->text('country');
+            $table->enum('country', Countries::asArray());
             $table->timestamps();
         });
     }

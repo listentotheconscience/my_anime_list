@@ -7,11 +7,14 @@
     "require": {
         "php": "^7.3|^8.1",
         "bensampo/laravel-enum": "^4.1",
+        "dillingham/nova-items-field": "^0.6.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.65",
         "laravel/sanctum": "^2.12",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "optimistdigital/nova-multiselect-field": "^2.3",
+        "simplesquid/nova-enum-field": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
