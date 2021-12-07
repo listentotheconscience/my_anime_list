@@ -3,11 +3,9 @@
 namespace App\Nova;
 
 use App\Enums\Genres;
-use App\Enums\Status;
-use App\Enums\Type;
-use App\Nova\Actions\SetAnnouncedAction;
-use App\Nova\Actions\SetFinishedAction;
-use App\Nova\Actions\SetOngoingAction;
+use App\Enums\MangaStatus;
+use App\Enums\MangaTypes;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
@@ -15,16 +13,17 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use OptimistDigital\MultiselectField\Multiselect;
 
-class Anime extends Resource
+class Manga extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Anime::class;
+    public static $model = \App\Models\Manga::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -57,10 +56,11 @@ class Anime extends Resource
             Text::make('Name')
                 ->sortable(),
 
-            Number::make('Episodes')
+            Number::make('Chapters')
+                ->min(0)
                 ->sortable(),
 
-            BelongsTo::make('Licensor', 'licensors', Licensor::class)
+            BelongsTo::make('Mangaka', 'mangakas', Mangaka::class)
                 ->hideFromIndex(),
 
             Multiselect::make('Genres')
@@ -72,20 +72,17 @@ class Anime extends Resource
                 ->max(10)
                 ->sortable(),
 
-            Text::make('Season')
+            Number::make('Year')
+                ->min(1930)
+                ->max(Carbon::now()->format('Y'))
                 ->sortable(),
 
             Select::make('Type')
-                ->options(Type::asArray()),
+                ->options(MangaTypes::asArray()),
 
             Select::make('Status')
-                ->options(Status::asArray()),
+                ->options(MangaStatus::asArray()),
 
-            BelongsTo::make('Producer', 'producers', Producer::class)
-                ->hideFromIndex(),
-
-            BelongsTo::make('Studio', 'studios', Studio::class)
-                ->hideFromIndex(),
 
             Image::make('Image')
                 ->prunable()
@@ -135,12 +132,6 @@ class Anime extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            SetAnnouncedAction::make()->withoutConfirmation(),
-
-            SetOngoingAction::make()->withoutConfirmation(),
-
-            SetFinishedAction::make()->withoutConfirmation()
-        ];
+        return [];
     }
 }
