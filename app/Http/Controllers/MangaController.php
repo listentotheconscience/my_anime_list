@@ -21,7 +21,9 @@ class MangaController extends Controller
 
     public function apiGet(MangaGetByIdRequest $request)
     {
-        return MangaResource::make($this->mangaRepository->getById($request->id));
+        return MangaResource::make(
+            $this->mangaRepository->getById($request->id)
+        );
     }
 
     /**

@@ -8,6 +8,7 @@ use App\Enums\MangaTypes;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Number;
@@ -30,7 +31,7 @@ class Manga extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -87,7 +88,9 @@ class Manga extends Resource
             Image::make('Image')
                 ->prunable()
                 ->path('images')
-                ->disk('public')
+                ->disk('public'),
+
+            HasMany::make('Votes', 'Votes')
         ];
     }
 

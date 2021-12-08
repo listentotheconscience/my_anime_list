@@ -17,4 +17,9 @@ class Repository
     {
         return $this->model::find($id);
     }
+
+    public function create(array $data)
+    {
+        return $this->model::create($data);
+    }
 }

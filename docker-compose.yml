@@ -1,6 +1,28 @@
 version: '3.8'
 
 services:
+    php:
+        build:
+            context: .
+            dockerfile: .docker/Dockerfile
+        image: php:8.1-fpm
+        container_name: php
+        tty: true
+        working_dir: /var/www
+        restart: unless-stopped
+        environment:
+            SERVICE_NAME: app
+            SERVICE_TAGS: dev
+        volumes:
+            - ./:/var/www
+        depends_on:
+            - postgres
+        links:
+            - postgres
+        networks:
+            app-net:
+                ipv4_address: 172.10.0.6
+
     nginx:
         image: nginx:alpine
         container_name: nginx
@@ -17,28 +39,6 @@ services:
         networks:
             app-net:
                 ipv4_address: 172.10.0.5
-
-    php:
-        build:
-            context: .
-            dockerfile: .docker/Dockerfile
-        image: php:8.1-fpm
-        container_name: php
-        tty: true
-        working_dir: /var/www
-        environment:
-            SERVICE_NAME: app
-            SERVICE_TAGS: dev
-        volumes:
-            -   ./:/var/www
-        depends_on:
-            - postgres
-        links:
-            - postgres
-        networks:
-            app-net:
-                ipv4_address: 172.10.0.6
-
     postgres:
         image: postgres:13.3
         container_name: postgres

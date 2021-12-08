@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AnimeAddRatingRequest;
 use App\Http\Requests\AnimeGetByIdRequest;
 use App\Http\Resources\AnimeResource;
 use App\Repositories\AnimeRepository;
@@ -23,6 +24,13 @@ class AnimeController extends Controller
 
     public function apiGet(AnimeGetByIdRequest $request)
     {
-        return AnimeResource::make($this->animeRepository->getById($request->id));
+        return AnimeResource::make(
+            $this->animeRepository->getById($request->id)
+        );
+    }
+
+    public function addRating(AnimeAddRatingRequest $request)
+    {
+
     }
 }

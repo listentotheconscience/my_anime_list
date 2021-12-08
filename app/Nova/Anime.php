@@ -10,6 +10,7 @@ use App\Nova\Actions\SetFinishedAction;
 use App\Nova\Actions\SetOngoingAction;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Number;
@@ -31,7 +32,7 @@ class Anime extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -90,7 +91,9 @@ class Anime extends Resource
             Image::make('Image')
                 ->prunable()
                 ->path('images')
-                ->disk('public')
+                ->disk('public'),
+
+            HasMany::make('Votes', 'Votes')
         ];
     }
 

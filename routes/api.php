@@ -27,6 +27,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         return auth()->user();
     });
 
+    Route::post('/anime/addRating', [AnimeController::class, 'addRating']);
+    Route::post('/manga/addRating', [MangaController::class, 'addRating']);
+
     Route::post('/auth/logout', [AuthController::class, 'logout']);
 });
 
