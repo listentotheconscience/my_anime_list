@@ -27,6 +27,8 @@ class Anime extends Resource
      */
     public static $model = \App\Models\Anime::class;
 
+    public static $group = 'Anime';
+
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
@@ -69,6 +71,7 @@ class Anime extends Resource
 
             Number::make('Rating')
                 ->step(0.01)
+                ->default(fn () => 0)
                 ->min(0)
                 ->max(10)
                 ->sortable(),

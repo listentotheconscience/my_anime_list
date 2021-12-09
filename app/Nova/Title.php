@@ -2,29 +2,29 @@
 
 namespace App\Nova;
 
-use App\Nova\Metrics\NewUsers;
+use App\Enums\TitleStatus;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Avatar;
-use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\MorphTo;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Title extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Title::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -32,7 +32,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
     ];
 
     /**
@@ -44,29 +44,18 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            ID::make(__('ID'), 'id')->sortable(),
 
-            Avatar::make('Image')
-                ->preview(fn ($value) => $value)
-                ->disk('public')
-                ->path('images')
-                ->prunable()
-                ->hideFromIndex(),
+            MorphTo::make('Titlable')
+                ->types([
+                    Anime::class,
+                    Manga::class
+                ]),
 
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+            Select::make('Status')
+                ->options(TitleStatus::asArray()),
 
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+            BelongsTo::make('User', 'user')
         ];
     }
 
@@ -78,9 +67,7 @@ class User extends Resource
      */
     public function cards(Request $request)
     {
-        return [
-            new NewUsers
-        ];
+        return [];
     }
 
     /**

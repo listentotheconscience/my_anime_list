@@ -6,6 +6,7 @@ use App\Http\Requests\AnimeAddRatingRequest;
 use App\Http\Requests\AnimeGetByIdRequest;
 use App\Http\Resources\AnimeResource;
 use App\Repositories\AnimeRepository;
+use App\Services\AnimeService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
@@ -14,12 +15,15 @@ class AnimeController extends Controller
     use ApiResponser;
 
     private AnimeRepository $animeRepository;
+    private AnimeService $animeService;
 
     public function __construct(
-        AnimeRepository $animeRepository
+        AnimeRepository $animeRepository,
+        AnimeService $animeService
     )
     {
         $this->animeRepository = $animeRepository;
+        $this->animeService = $animeService;
     }
 
     public function apiGet(AnimeGetByIdRequest $request)
@@ -31,6 +35,7 @@ class AnimeController extends Controller
 
     public function addRating(AnimeAddRatingRequest $request)
     {
-
+         $response = $this->animeService->addRating($request->id, $request->rating, auth()->id());
+         return $this->success($response);
     }
 }

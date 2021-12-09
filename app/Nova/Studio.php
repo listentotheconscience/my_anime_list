@@ -22,6 +22,8 @@ class Studio extends Resource
      */
     public static $model = \App\Models\Studio::class;
 
+    public static $group = 'Anime';
+
     /**
      * The single value that should be used to represent the resource when being displayed.
      *

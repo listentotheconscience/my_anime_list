@@ -26,6 +26,8 @@ class Manga extends Resource
      */
     public static $model = \App\Models\Manga::class;
 
+    public static $group = 'Manga';
+
     /**
      * The single value that should be used to represent the resource when being displayed.
      *

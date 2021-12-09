@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([[
             'email' => 'iseethatshitlikethesharingan@gmail.com',
             'name' => 'listentotheconscience',
-            'password' => \Illuminate\Support\Facades\Hash::make('yourenottheonlyonetoblamehowthingsturnedout')
+            'password' => \Illuminate\Support\Facades\Hash::make('yourenottheonlyonetoblamehowthingsturnedout'),
+            'image' => 'https://sun9-61.userapi.com/impg/I4EjGENimuDPrihSumJSDK4yfeq3zRb34ARl0Q/wzZPJ9MIQG4.jpg?size=1080x1080&quality=96&sign=e716966a259027d07286fce64a684207&type=album'
         ]]);
     }
 }

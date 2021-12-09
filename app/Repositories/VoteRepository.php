@@ -26,6 +26,6 @@ class VoteRepository extends Repository
 
     public function countRatingForVotable($votable_type, $votable_id)
     {
-        return $this->getVotableById($votable_type, $votable_id)->avg();
+        return $this->getVotableById($votable_type, $votable_id)->avg('rating');
     }
 }
