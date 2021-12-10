@@ -3,6 +3,12 @@
 namespace App\Nova;
 
 use App\Enums\TitleStatus;
+use App\Nova\Actions\SetAbandonedAction;
+use App\Nova\Actions\SetDroppedAction;
+use App\Nova\Actions\SetFavoriteAction;
+use App\Nova\Actions\SetPlannedAction;
+use App\Nova\Actions\SetWatchedAction;
+use App\Nova\Actions\SetWatchingAction;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
@@ -100,6 +106,12 @@ class Title extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            SetDroppedAction::make()->withoutConfirmation(),
+            SetFavoriteAction::make()->withoutConfirmation(),
+            SetPlannedAction::make()->withoutConfirmation(),
+            SetWatchedAction::make()->withoutConfirmation(),
+            SetWatchingAction::make()->withoutConfirmation()
+        ];
     }
 }

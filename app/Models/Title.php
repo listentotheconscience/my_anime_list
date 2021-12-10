@@ -9,6 +9,8 @@ class Title extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     public function titlable()
     {
         return $this->morphTo();

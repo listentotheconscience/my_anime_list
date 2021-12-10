@@ -10,6 +10,8 @@ class Manga extends Model
 {
     use HasFactory, Votable;
 
+    protected $guarded = ['id'];
+
     public function mangakas()
     {
         return $this->belongsTo(Mangaka::class, 'mangaka');

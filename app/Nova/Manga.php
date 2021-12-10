@@ -5,6 +5,11 @@ namespace App\Nova;
 use App\Enums\Genres;
 use App\Enums\MangaStatus;
 use App\Enums\MangaTypes;
+use App\Nova\Actions\SetAbandonedAction;
+use App\Nova\Actions\SetAnnouncedAction;
+use App\Nova\Actions\SetFinishedAction;
+use App\Nova\Actions\SetOngoingAction;
+use App\Nova\Actions\SetPausedAction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -137,6 +142,12 @@ class Manga extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            SetOngoingAction::make()->withoutConfirmation(),
+            SetAnnouncedAction::make()->withoutConfirmation(),
+            SetFinishedAction::make()->withoutConfirmation(),
+            SetPausedAction::make()->withoutConfirmation(),
+            SetAbandonedAction::make()->withoutConfirmation()
+        ];
     }
 }

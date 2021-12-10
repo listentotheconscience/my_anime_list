@@ -2,84 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TitleResource;
 use App\Models\Title;
+use App\Repositories\TitleRepository;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class TitleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    use ApiResponser;
+
+    private TitleRepository $titleRepository;
+
+    public function __construct(
+        TitleRepository $titleRepository
+    )
     {
-        //
+        $this->titleRepository = $titleRepository;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getListForMe()
     {
-        //
+        $data = $this->titleRepository->getAllForCurrentUser();
+
+        return $this->success(TitleResource::collection($data));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Title  $title
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Title $title)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Title  $title
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Title $title)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Title  $title
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Title $title)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Title  $title
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Title $title)
-    {
-        //
-    }
 }

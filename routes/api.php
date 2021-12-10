@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnimeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MangaController;
+use App\Http\Controllers\TitleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/me', function(Request $request) {
         return auth()->user();
     });
+
+    Route::get('/myList', [TitleController::class, 'getListForMe']);
 
     Route::post('/anime/addRating', [AnimeController::class, 'addRating']);
     Route::post('/manga/addRating', [MangaController::class, 'addRating']);
