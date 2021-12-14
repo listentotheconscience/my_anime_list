@@ -37,4 +37,28 @@ class MangaService
             'message' => 'Successful'
         ];
     }
+
+    public function delRating($id, $user_id)
+    {
+        $manga = $this->animeRepository->getById($id);
+
+        $vote = $this->voteRepository
+            ->getVotableById(Manga::class, $id)
+            ->where('user_id', $user_id)
+            ->first();
+
+        $success = $this->voteRepository->deleteVotable($vote);
+
+        if ($success) {
+            $manga->rating = $this->voteRepository->countRatingForVotable(Manga::class, $id);
+            return [
+                'message' => 'Deleted'
+            ];
+        }
+
+        return [
+            'message' => 'Cannot find vote',
+            'code' => 404
+        ];
+    }
 }

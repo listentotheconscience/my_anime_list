@@ -28,4 +28,9 @@ class VoteRepository extends Repository
     {
         return $this->getVotableById($votable_type, $votable_id)->avg('rating');
     }
+
+    public function deleteVotable(Vote $votable): ?bool
+    {
+        return $votable->delete();
+    }
 }

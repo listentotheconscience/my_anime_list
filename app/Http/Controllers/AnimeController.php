@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AnimeAddRatingRequest;
+use App\Http\Requests\AnimeDeleteRatingRequest;
 use App\Http\Requests\AnimeGetByIdRequest;
 use App\Http\Resources\AnimeResource;
 use App\Repositories\AnimeRepository;
@@ -37,5 +38,11 @@ class AnimeController extends Controller
     {
          $response = $this->animeService->addRating($request->id, $request->rating, auth()->id());
          return $this->success($response);
+    }
+
+    public function delRating(AnimeDeleteRatingRequest $request)
+    {
+        $response = $this->animeService->delRating($request->id, auth()->id());
+        return $this->success($response);
     }
 }
