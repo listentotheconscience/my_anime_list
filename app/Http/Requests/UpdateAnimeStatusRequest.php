@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\TitleStatus;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateAnimeStatusRequest extends FormRequest
 {
@@ -24,7 +26,8 @@ class UpdateAnimeStatusRequest extends FormRequest
     public function rules()
     {
         return [
-            //TODO: set the rules
+            'id' => 'required|exists:animes,id',
+            'section' => ['required', 'string', Rule::in(TitleStatus::asArray())]
         ];
     }
 }

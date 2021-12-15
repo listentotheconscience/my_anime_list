@@ -22,4 +22,9 @@ class Repository
     {
         return $this->model::create($data);
     }
+
+    public function update($item, array $data)
+    {
+        return $item->update($data);
+    }
 }

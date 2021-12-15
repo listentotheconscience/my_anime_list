@@ -11,13 +11,11 @@ use App\Http\Requests\UpdateMangaStatusRequest;
 use App\Http\Resources\TitleResource;
 use App\Models\Anime;
 use App\Models\Manga;
-use App\Models\Title;
 use App\Repositories\AnimeRepository;
 use App\Repositories\MangaRepository;
 use App\Repositories\TitleRepository;
 use App\Services\TitleService;
 use App\Traits\ApiResponser;
-use Illuminate\Http\Request;
 
 class TitleController extends Controller
 {
@@ -50,7 +48,7 @@ class TitleController extends Controller
 
     public function addAnimeToList(AddAnimeToListRequest $request)
     {
-        $anime = $this->animeRepository->getById($request->id);
+        $anime = $this->titleRepository->getByIdForCurrentUser($request->id, Anime::class);
         if ($anime) {
             return $this->error('This anime in list already', 406);
         }
@@ -63,7 +61,7 @@ class TitleController extends Controller
 
     public function addMangaToList(AddMangaToListRequest $request)
     {
-        $manga = $this->mangaRepository->getById($request->id);
+        $manga = $this->titleRepository->getByIdForCurrentUser($request->id, Manga::class);
         if ($manga) {
             return $this->error('This manga in list already', 406);
         }
@@ -76,21 +74,29 @@ class TitleController extends Controller
 
     public function delAnimeFromList(DelAnimeFromListRequest $request)
     {
-        //TODO: implement this
+        $response = $this->titleService->deleteTitlable(Anime::class, $request->id);
+
+        return $this->success($response);
     }
 
     public function delMangaFromList(DelMangaFromListRequest $request)
     {
-        //TODO: implement this
+        $response = $this->titleService->deleteTitlable(Manga::class, $request->id);
+
+        return $this->success($response);
     }
 
     public function updateAnimeStatus(UpdateAnimeStatusRequest $request)
     {
-        //TODO: implement this
+        $response = $this->titleService->updateStatus(Anime::class, $request->id, $request->section);
+
+        return $this->success($response);
     }
 
     public function updateMangaStatus(UpdateMangaStatusRequest $request)
     {
-        //TODO: implement this
+        $response = $this->titleService->updateStatus(Manga::class, $request->id, $request->section);
+
+        return $this->success($response);
     }
 }

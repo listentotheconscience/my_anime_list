@@ -16,6 +16,20 @@ class TitleRepository extends Repository
         return $this->model::where('user_id', auth()->id())->get();
     }
 
+    public function getByIdForCurrentUser($id, $titlable_type)
+    {
+        return $this->model::where('user_id', auth()->id())->where('titlable_type', $titlable_type)
+            ->where('titlable_id', $id)->first();
+    }
+
+    public function getTitlableById($titlable_type, $titlable_id)
+    {
+        $title = Title::where('titlable_type', $titlable_type)->where('titlable_id', $titlable_id)
+            ->where('user_id', auth()->id())->first();
+
+        return $title;
+    }
+
     public function getWithStatusForCurrentUser($status)
     {
         return $this->model::where('user_id', auth()->id())

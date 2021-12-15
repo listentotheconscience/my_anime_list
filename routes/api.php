@@ -22,10 +22,6 @@ use Illuminate\Support\Facades\Route;
  *  Auth Group
  */
 
-Route::post('/auth/signup', [AuthController::class, 'signup'])->name('auth.signup');
-
-Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');
-
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/me', [AuthController::class, 'me'])->name('auth.me');
 
@@ -50,12 +46,41 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/myList', [TitleController::class, 'getListForMe'])->name('list.me');
-    Route::post('/anime/toList', [TitleController::class, 'addAnimeToList'])->name('list.anime.add');
-    Route::post('/manga/toList', [TitleController::class, 'addMangaToList'])->name('list.manga.add');
 
-    Route::post('/anime/fromList', [TitleController::class, 'delAnimeFromList'])->name('list.anime.del');
-    Route::post('/manga/fromList', [TitleController::class, 'delMagnaFromList'])->name('list.manga.del');
+    Route::post('/anime/list', [TitleController::class, 'addAnimeToList'])->name('list.anime.add');
+    Route::post('/manga/list', [TitleController::class, 'addMangaToList'])->name('list.manga.add');
+
+    Route::delete('/anime/list', [TitleController::class, 'delAnimeFromList'])->name('list.anime.del');
+    Route::delete('/manga/list', [TitleController::class, 'delMangaFromList'])->name('list.manga.del');
+
+    Route::put('/anime/list', [TitleController::class, 'updateAnimeStatus'])->name('list.anime.upd');
+    Route::put('/manga/list', [TitleController::class, 'updateMangaStatus'])->name('list.manga.upd');
 });
+
+/*
+ *  Comment Group
+ */
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/anime/{id}/comment', [])->name('comment.anime.add');
+    Route::post('/manga/{id}/comment', [])->name('comment.manga.add');
+
+    Route::delete('/anime/{id}/comment', [])->name('comment.anime.del');
+    Route::delete('/anime/{id}/comment', [])->name('comment.anime.del');
+
+    Route::put('/anime/{id}/comment', [])->name('comment.anime.upd');
+    Route::put('/anime/{id}/comment', [])->name('comment.anime.upd');
+});
+
+/*
+ *  Routes without auth
+ */
 
 Route::get('/anime/{id}', [AnimeController::class, 'apiGet'])->name('anime.signle');
 Route::get('/manga/{id}', [MangaController::class, 'apiGet'])->name('magna.single');
+
+Route::get('/anime/{id}/comment', [])->name('comment.anime.get');
+Route::get('/anime/{id}/comment', [])->name('comment.anime.get');
+
+Route::post('/auth/signup', [AuthController::class, 'signup'])->name('auth.signup');
+Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');

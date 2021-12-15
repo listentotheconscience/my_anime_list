@@ -2,28 +2,20 @@
 
 namespace App\Nova;
 
-use App\Enums\TitleStatus;
-use App\Nova\Actions\SetAbandonedAction;
-use App\Nova\Actions\SetDroppedAction;
-use App\Nova\Actions\SetFavoriteAction;
-use App\Nova\Actions\SetPlannedAction;
-use App\Nova\Actions\SetWatchedAction;
-use App\Nova\Actions\SetWatchingAction;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphTo;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\Text;
 
-class Title extends Resource
+class Comment extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Title::class;
+    public static $model = \App\Models\Comment::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -52,16 +44,20 @@ class Title extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
 
-            MorphTo::make('Titlable')
+            BelongsTo::make('User', 'user')
+                ->creationRules('required')
+                ->updateRules('required', 'unique:{{resourceId}}'),
+
+            Text::make('Content')
+                ->hideFromIndex()
+                ->creationRules('required','max:255')
+                ->updateRules('required', 'max:255', 'unique:{{resourceId}}'),
+
+            MorphTo::make('Commentable')
                 ->types([
                     Anime::class,
                     Manga::class
-                ]),
-
-            Select::make('Status')
-                ->options(TitleStatus::asArray()),
-
-            BelongsTo::make('User', 'user')
+                ])
         ];
     }
 
@@ -106,12 +102,6 @@ class Title extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            SetDroppedAction::make()->withoutConfirmation(),
-            SetFavoriteAction::make()->withoutConfirmation(),
-            SetPlannedAction::make()->withoutConfirmation(),
-            SetWatchedAction::make()->withoutConfirmation(),
-            SetWatchingAction::make()->withoutConfirmation()
-        ];
+        return [];
     }
 }

@@ -30,4 +30,9 @@ class Anime extends Model
     {
         return $this->belongsTo(Studio::class, 'studio');
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
 }

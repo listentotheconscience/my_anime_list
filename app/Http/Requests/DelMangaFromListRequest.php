@@ -26,8 +26,7 @@ class DelMangaFromListRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|exists:animes,id',
-            'section' => ['required', 'string', Rule::in(TitleStatus::asArray())]
+            'id' => 'required|exists:animes,id'
         ];
     }
 }

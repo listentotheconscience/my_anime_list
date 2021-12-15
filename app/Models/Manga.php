@@ -17,5 +17,8 @@ class Manga extends Model
         return $this->belongsTo(Mangaka::class, 'mangaka');
     }
 
-
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
 }
