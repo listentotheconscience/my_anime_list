@@ -40,7 +40,30 @@ I use Manjaro Linux, so I use pacman
 # pacman -S docker docker-compose
 ```
 
-3. Run
+3. Get ASW S3 storage and set the variables in .env file
+```bash
+$ cp .env.example .env
+```
+in .env file
+```dotenv
+   APP_NAME=MyAnimeList
+   APP_URL=http://172.10.0.5
+   APP_PORT=80 #if you use http
+   APP_PORT=443 #if you use https
+   DB_CONNECTION=pgsql
+   DB_HOST=postgres
+   DB_DATABASE=your_database_name
+   DB_USERNAME=your_database_user
+   DB_PASSWORD=your_database_pass
+   AWS_ACCESS_KEY_ID=ACCESSKEYIDFROMAWS
+   AWS_SECRET_ACCESS_KEY=SECRETACCESSKEYFROMAWS
+   AWS_DEFAULT_REGION=your_bucket_region
+   AWS_BUCKET=your_bucket_name
+```
+
+<mark>Without AWS S3 it WILL NOT work!!</mark>
+
+4.Run
 ```bash
 $ docker-compose up -d
 ```
@@ -53,3 +76,11 @@ $ docker-compose up -d
 - Adminer container is accessible by address 172.10.0.10
 
 If you want to change addresses you need to change it in docker-compose.yml
+
+## In Future
+- [x] Add Comments
+- [ ] Add Reviews
+- [ ] Add Ranobe support
+- [ ] Frieds
+- [ ] Followers
+- [ ] Messages
