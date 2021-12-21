@@ -21,10 +21,10 @@ class TitleController extends Controller
 {
     use ApiResponser;
 
-    private TitleRepository $titleRepository;
-    private AnimeRepository $animeRepository;
-    private MangaRepository $mangaRepository;
-    private TitleService $titleService;
+    protected TitleRepository $titleRepository;
+    protected AnimeRepository $animeRepository;
+    protected MangaRepository $mangaRepository;
+    protected TitleService $titleService;
 
     public function __construct(
         TitleRepository $titleRepository,
@@ -39,64 +39,10 @@ class TitleController extends Controller
         $this->titleService = $titleService;
     }
 
-    public function getListForMe()
+    public function list()
     {
         $data = $this->titleRepository->getAllForCurrentUser();
 
         return $this->success(TitleResource::collection($data));
-    }
-
-    public function addAnimeToList(AddAnimeToListRequest $request)
-    {
-        $anime = $this->titleRepository->getByIdForCurrentUser($request->id, Anime::class);
-        if ($anime) {
-            return $this->error('This anime in list already', 406);
-        }
-
-        $title = $this->titleService->addTitlableToList(
-            Anime::class, $request->id, $request->section, auth()->id());
-
-        return $this->success($title);
-    }
-
-    public function addMangaToList(AddMangaToListRequest $request)
-    {
-        $manga = $this->titleRepository->getByIdForCurrentUser($request->id, Manga::class);
-        if ($manga) {
-            return $this->error('This manga in list already', 406);
-        }
-
-        $title = $this->titleService->addTitlableToList(
-            Manga::class, $request->id, $request->section, auth()->id());
-
-        return $this->success($title);
-    }
-
-    public function delAnimeFromList(DelAnimeFromListRequest $request)
-    {
-        $response = $this->titleService->deleteTitlable(Anime::class, $request->id);
-
-        return $this->success($response);
-    }
-
-    public function delMangaFromList(DelMangaFromListRequest $request)
-    {
-        $response = $this->titleService->deleteTitlable(Manga::class, $request->id);
-
-        return $this->success($response);
-    }
-
-    public function updateAnimeStatus(UpdateAnimeStatusRequest $request)
-    {
-        $response = $this->titleService->updateStatus(Anime::class, $request->id, $request->section);
-
-        return $this->success($response);
-    }
-
-    public function updateMangaStatus(UpdateMangaStatusRequest $request)
-    {
-        $response = $this->titleService->updateStatus(Manga::class, $request->id, $request->section);
-
-        return $this->success($response);
     }
 }

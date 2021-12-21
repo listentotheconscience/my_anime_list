@@ -1,7 +1,7 @@
 <dropdown-trigger class="h-9 flex items-center">
     @isset($user->email)
         <img
-            src="{{ $user->image }}"
+            src="{{ \Illuminate\Support\Facades\Storage::url($user->image) }}"
             class="rounded-full w-8 h-8 mr-3"
         />
     @endisset

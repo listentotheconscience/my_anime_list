@@ -58,11 +58,9 @@ class Studio extends Resource
                 ->updateRules('unique:studios,name, {{resourceId}}'),
 
             Image::make('Image')
-                ->disk('public')
-                ->path('images')
-                ->creationRules('required', 'image')
-                ->updateRules('image')
-                ->hideFromIndex(),
+                ->disk('s3')
+                ->hideFromIndex()
+                ->disableDownload(),
 
             Select::make('Country')
                 ->options(Countries::asArray())

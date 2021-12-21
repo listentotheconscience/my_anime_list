@@ -12,6 +12,7 @@ use App\Nova\Actions\SetOngoingAction;
 use App\Nova\Actions\SetPausedAction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
@@ -94,8 +95,8 @@ class Manga extends Resource
 
             Image::make('Image')
                 ->prunable()
-                ->path('images')
-                ->disk('public'),
+                ->disk('s3')
+                ->disableDownload(),
 
             HasMany::make('Votes', 'Votes')
         ];

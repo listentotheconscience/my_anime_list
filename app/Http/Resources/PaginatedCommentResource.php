@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CommentResource extends JsonResource
+class PaginatedCommentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,12 +15,8 @@ class CommentResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'commentable_type' => $this->commentable_type,
-            'commentable_id' => $this->commentable_id,
-            'content' => $this->content,
-            'parent_id' => $this->parent_id,
-            'replies' => CommentResource::collection($this->replies)
+            CommentResource::collection($this->data),
+            'hasNextPage' => $this->hasNextPage
         ];
     }
 }

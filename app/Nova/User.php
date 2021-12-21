@@ -4,9 +4,11 @@ namespace App\Nova;
 
 use App\Nova\Metrics\NewUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Text;
 
@@ -46,12 +48,11 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Avatar::make('Image')
-                ->preview(fn ($value) => $value)
-                ->disk('public')
-                ->path('images')
+            Image::make('Image')
+                ->disk('s3')
                 ->prunable()
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->disableDownload(),
 
             Text::make('Name')
                 ->sortable()

@@ -10,4 +10,14 @@ class CommentRepository extends Repository
     {
         parent::__construct($model);
     }
+
+    public function findCommentableByIdForCurrentUser(
+        $commentable_type, $commentable_id
+    )
+    {
+        return Comment::where('commentable_type', $commentable_type)
+            ->where('commentable_id', $commentable_id)
+            ->where('user_id', auth()->id())
+            ->first();
+    }
 }

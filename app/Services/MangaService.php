@@ -40,7 +40,7 @@ class MangaService
 
     public function delRating($id, $user_id)
     {
-        $manga = $this->animeRepository->getById($id);
+        $manga = $this->mangaRepository->getById($id);
 
         $vote = $this->voteRepository
             ->getVotableById(Manga::class, $id)
@@ -59,6 +59,22 @@ class MangaService
         return [
             'message' => 'Cannot find vote',
             'code' => 404
+        ];
+    }
+
+    public function updateRating($id, $rating_id, $rating)
+    {
+        $manga = $this->mangaRepository->getById($id);
+
+        $this->voteRepository->update($rating_id, [
+            'rating' => $rating
+        ]);
+
+        $manga->rating = $this->voteRepository->countRatingForVotable(Manga::class, $id);
+        $manga->save();
+
+        return [
+            'message' => 'Successful'
         ];
     }
 }

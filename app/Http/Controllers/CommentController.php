@@ -2,84 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
-use Illuminate\Http\Request;
+use App\Http\Requests\DeleteComment;
+use App\Http\Requests\UpdateComment;
+use App\Repositories\CommentRepository;
+use App\Services\CommentService;
 
-class CommentController extends Controller
+abstract class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    protected CommentRepository $commentRepository;
+    protected CommentService $commentService;
+
+    public function __construct(
+        CommentRepository $commentRepository,
+        CommentService $commentService
+    )
     {
-        //
+        $this->commentService = $commentService;
+        $this->commentRepository = $commentRepository;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function delete(DeleteComment $request)
     {
-        //
+        $response = $this->commentService->deleteComment($request->id);
+
+        return $this->success($response);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function update(UpdateComment $request)
     {
-        //
-    }
+        $response = $this->commentService->updateComment($request->id, $request->contents);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Comment $comment)
-    {
-        //
+        return $this->success($response);
     }
 }

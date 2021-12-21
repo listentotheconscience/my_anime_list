@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\Countries;
 use Faker\Generator;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Storage;
 
 class LicensorFactory extends Factory
 {
@@ -15,10 +16,12 @@ class LicensorFactory extends Factory
      */
     public function definition()
     {
+        $filename = $this->faker->image(null, 640, 400);
+        Storage::disk('s3')->put(basename($filename), file_get_contents($filename));
         return [
             'name' => $this->faker->company(),
             'country' => Countries::getRandomInstance(),
-            'image' => 'images/' . $this->faker->image('public/storage/images', 640, 480, null, false)
+            'image' => basename($filename)
         ];
     }
 }

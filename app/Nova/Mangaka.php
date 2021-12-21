@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Enums\Countries;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
@@ -55,12 +56,9 @@ class Mangaka extends Resource
                 ->updateRules('unique:licensors,name, {{resourceId}}'),
 
             Image::make('Image')
-                ->path('images')
-                ->disk('public')
-//                ->preview(function ($value) {
-//                    return $value;
-//                })
-                ->hideFromIndex(),
+                ->disk('s3')
+                ->hideFromIndex()
+                ->disableDownload(),
 
             Select::make('Country')
                 ->options(Countries::asArray())

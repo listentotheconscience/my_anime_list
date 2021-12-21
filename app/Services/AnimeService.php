@@ -61,4 +61,19 @@ class AnimeService
             'code' => 404
         ];
     }
+
+    public function updateRating($id, $rating_id, $rating)
+    {
+        $anime = $this->animeRepository->getById($id);
+        $vote  = $this->voteRepository->update($rating_id,[
+            'rating' => $rating
+        ]);
+
+        $anime->rating = $this->voteRepository->countRatingForVotable(Anime::class, $id);
+        $anime->save();
+
+        return [
+            'message' => 'Successful'
+        ];
+    }
 }

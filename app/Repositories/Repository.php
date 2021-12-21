@@ -23,8 +23,17 @@ class Repository
         return $this->model::create($data);
     }
 
-    public function update($item, array $data)
+    public function update($id, array $data)
     {
-        return $item->update($data);
+        $model = $this->model::find($id);
+
+        return $model->update($data);
+    }
+
+    public function deleteById($id)
+    {
+        $model = $this->model::find($id);
+
+        return $model->delete();
     }
 }

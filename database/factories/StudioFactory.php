@@ -16,12 +16,12 @@ class StudioFactory extends Factory
      */
     public function definition()
     {
-//        $url = $this->faker->imageUrl();
-//        $url = Storage::download($url,  Str::random(20));
+        $filename = $this->faker->image(null, 640, 400, 'anime', true);
+        Storage::disk('s3')->put(basename($filename), file_get_contents($filename));
         return [
             'name' => $this->faker->company(),
             'country' => Countries::getRandomInstance(),
-            'image' => 'images/' . $this->faker->image('public/storage/images', 640, 480, null, false)
+            'image' => basename($filename)
         ];
     }
 }

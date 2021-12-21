@@ -9,6 +9,7 @@ use App\Nova\Actions\SetAnnouncedAction;
 use App\Nova\Actions\SetFinishedAction;
 use App\Nova\Actions\SetOngoingAction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
@@ -93,8 +94,8 @@ class Anime extends Resource
 
             Image::make('Image')
                 ->prunable()
-                ->path('images')
-                ->disk('public'),
+                ->disk('s3')
+                ->disableDownload(),
 
             HasMany::make('Votes', 'Votes')
         ];
