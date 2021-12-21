@@ -48,7 +48,7 @@ class Comment extends Resource
                 ->creationRules('required')
                 ->updateRules('required', 'unique:{{resourceId}}'),
 
-            Text::make('Content')
+            Text::make('Contents')
                 ->hideFromIndex()
                 ->creationRules('required','max:255')
                 ->updateRules('required', 'max:255', 'unique:{{resourceId}}'),

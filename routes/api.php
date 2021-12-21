@@ -54,7 +54,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
  */
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/myList', [TitleController::class, 'list'])->name('list.me');
+    Route::get('/list', [TitleController::class, 'list'])->name('list.me');
 
     Route::post('/anime/list', [AnimeTitleController::class, 'create'])->name('list.anime.add');
     Route::post('/manga/list', [MangaCommentController::class, 'create'])->name('list.manga.add');
@@ -77,8 +77,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/anime/{id}/comment', [AnimeCommentController::class, 'delete'])->name('comment.anime.del');
     Route::delete('/anime/{id}/comment', [MangaCommentController::class, 'delete'])->name('comment.anime.del');
 
-    Route::put('/anime/{id}/comment', [AnimeCommentController::class, 'update'])->name('comment.anime.upd');
-    Route::put('/anime/{id}/comment', [MangaCommentController::class, 'updateComment'])->name('comment.anime.upd');
+    Route::put('/anime/comment', [AnimeCommentController::class, 'update'])->name('comment.anime.upd');
+    Route::put('/anime/comment', [MangaCommentController::class, 'update'])->name('comment.anime.upd');
 });
 
 /*

@@ -15,8 +15,8 @@ class PaginatedCommentResource extends JsonResource
     public function toArray($request)
     {
         return [
-            CommentResource::collection($this->data),
-            'hasNextPage' => $this->hasNextPage
+            'comments' => CommentResource::collection($this['data']),
+            'hasNextPage' => $this['hasNextPage']
         ];
     }
 }

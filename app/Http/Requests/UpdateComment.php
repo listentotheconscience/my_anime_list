@@ -6,10 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateComment extends FormRequest
 {
-    protected function prepareForValidation()
-    {
-        $this->merge(['id' => $this->route('id')]);
-    }
 
     /**
      * Determine if the user is authorized to make this request.
@@ -30,7 +26,7 @@ class UpdateComment extends FormRequest
     {
         return [
             'id' => 'required|exists:comments,id',
-            'contests' => 'required|string|max:255'
+            'contents' => 'required|string|max:255'
         ];
     }
 }

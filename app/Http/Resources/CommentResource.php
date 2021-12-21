@@ -18,7 +18,7 @@ class CommentResource extends JsonResource
             'id' => $this->id,
             'commentable_type' => $this->commentable_type,
             'commentable_id' => $this->commentable_id,
-            'content' => $this->content,
+            'contents' => $this->contents,
             'parent_id' => $this->parent_id,
             'replies' => CommentResource::collection($this->replies)
         ];

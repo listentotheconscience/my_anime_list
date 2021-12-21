@@ -38,7 +38,7 @@ class CommentController extends BaseController
 
     public function get(GetAnimeCommentRequest $request)
     {
-        $collection = $this->animeRepository->getById($request->id)->comments();
+        $collection = $this->animeRepository->getById($request->id)->comments()->get();
 
         $collection = PaginationService::paginate($collection, $request->page);
 

@@ -11,8 +11,7 @@ class PaginationService
     static public function paginate(Collection $collection, int $page_num): array
     {
         $collection_count = $collection->count();
-
-        $collection = $collection->skip(self::PER_PAGE * $page_num)->take(self::PER_PAGE);
+        $collection = $collection->slice(self::PER_PAGE * ($page_num - 1), self::PER_PAGE);
 
         $hasNextPage = self::hasNextPage($collection_count, $page_num);
 
@@ -24,6 +23,6 @@ class PaginationService
 
     static private function hasNextPage($collection_count, $page_num): bool
     {
-        return !(($collection_count / self::PER_PAGE) > $page_num);
+        return !(ceil($collection_count / self::PER_PAGE) > $page_num);
     }
 }

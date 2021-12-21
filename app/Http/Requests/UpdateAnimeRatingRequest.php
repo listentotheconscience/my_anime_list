@@ -24,7 +24,7 @@ class UpdateAnimeRatingRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|exists:mangas,id',
+            'id' => 'required|exists:animes,id',
             'rating_id' => 'required|exists:votes,id',
             'rating' => 'required|integer'
         ];
