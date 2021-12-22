@@ -57,13 +57,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/list', [TitleController::class, 'list'])->name('list.me');
 
     Route::post('/anime/list', [AnimeTitleController::class, 'create'])->name('list.anime.add');
-    Route::post('/manga/list', [MangaCommentController::class, 'create'])->name('list.manga.add');
+    Route::post('/manga/list', [MangaTitleController::class, 'create'])->name('list.manga.add');
 
     Route::delete('/anime/list', [AnimeTitleController::class, 'delete'])->name('list.anime.del');
-    Route::delete('/manga/list', [MangaCommentController::class, 'delete'])->name('list.manga.del');
+    Route::delete('/manga/list', [MangaTitleController::class, 'delete'])->name('list.manga.del');
 
     Route::put('/anime/list', [AnimeTitleController::class, 'update'])->name('list.anime.upd');
-    Route::put('/manga/list', [MangaCommentController::class, 'update'])->name('list.manga.upd');
+    Route::put('/manga/list', [MangaTitleController::class, 'update'])->name('list.manga.upd');
 });
 
 /*

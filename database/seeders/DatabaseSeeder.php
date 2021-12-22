@@ -23,9 +23,9 @@ class DatabaseSeeder extends Seeder
         $filename = file_get_contents('https://sun9-61.userapi.com/impg/I4EjGENimuDPrihSumJSDK4yfeq3zRb34ARl0Q/wzZPJ9MIQG4.jpg?size=1080x1080&quality=96&sign=e716966a259027d07286fce64a684207&type=album');
         Storage::disk('s3')->put('admin/admin_avatar.jpg', $filename);
 
-        Licensor::factory(50)->create();
-        Studio::factory(50)->create();
-        Producer::factory(50)->create();
+//        Licensor::factory(50)->create();
+//        Studio::factory(50)->create();
+//        Producer::factory(50)->create();
         DB::table('users')->insert([[
             'email' => 'iseethatshitlikethesharingan@gmail.com',
             'name' => 'listentotheconscience',
