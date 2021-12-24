@@ -40,7 +40,7 @@ I use Manjaro Linux, so I use pacman
 # pacman -S docker docker-compose
 ```
 
-3. Get ASW S3 storage and set the variables in .env file
+3. Get AWS S3 storage and set the variables in .env file
 ```bash
 $ cp .env.example .env
 ```
@@ -79,8 +79,9 @@ If you want to change addresses you need to change it in docker-compose.yml
 
 ## In Future
 - [x] Add Comments
+- [x] Followers
 - [ ] Add Reviews
 - [ ] Add Ranobe support
 - [ ] Frieds
-- [ ] Followers
 - [ ] Messages
+- [ ] User roles like admin, moderator, etc

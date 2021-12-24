@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Anime\AnimeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\Manga\MangaController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TitleController;
@@ -79,6 +80,18 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::put('/anime/comment', [AnimeCommentController::class, 'update'])->name('comment.anime.upd');
     Route::put('/anime/comment', [MangaCommentController::class, 'update'])->name('comment.anime.upd');
+});
+
+/*
+ *  Follower Group
+ */
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('/user/{id}/follow', [FollowerController::class, 'index'])->name('follower.all');
+
+    Route::post('/user/{id}/follow', [FollowerController::class, 'create'])->name('follower.follow');
+
+    Route::delete('/user/{id}/follow', [FollowerController::class, 'delete'])->name('follower.unfollow');
 });
 
 /*

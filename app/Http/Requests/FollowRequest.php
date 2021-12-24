@@ -3,12 +3,16 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class GetMangaCommentRequest extends FormRequest
+class FollowRequest extends FormRequest
 {
     protected function prepareForValidation()
     {
-        $this->merge(['id' => $this->route('id')]);
+        $this->merge([
+            'follower_id' => auth()->id(),
+            'followed_id' => $this->route('id')
+        ]);
     }
 
     /**
@@ -29,7 +33,8 @@ class GetMangaCommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|exists:mangas,id'
+            'follower_id' => 'required|exists:users,id',
+            'followed_id' => ['required', 'exists:users,id', Rule::notIn([auth()->id()])]
         ];
     }
 }
