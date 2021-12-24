@@ -30,8 +30,10 @@ class FollowerService
         return $this->followerRepository->delete($request->followed_id);
     }
 
-    public function list()
+    public function list(bool $searchFollows)
     {
-        return $this->followerRepository->getAllForCurrentUser();
+        return $searchFollows ?
+               $this->followerRepository->getAllFollowsForCurrentUser() :
+               $this->followerRepository->getAllFollowersForCurrentUser();
     }
 }

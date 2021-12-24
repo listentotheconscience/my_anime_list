@@ -87,7 +87,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
  */
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('/user/{id}/follow', [FollowerController::class, 'index'])->name('follower.all');
+    Route::get('/me/follows', [FollowerController::class, 'follows'])->name('follower.all.follows');
+
+    Route::get('/me/followers', [FollowerController::class, 'followers'])->name('follower.all.followers');
 
     Route::post('/user/{id}/follow', [FollowerController::class, 'create'])->name('follower.follow');
 

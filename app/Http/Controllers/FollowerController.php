@@ -21,9 +21,15 @@ class FollowerController extends Controller
         $this->followerService = $followerService;
     }
 
-    public function index()
+    public function follows()
     {
-        $list = $this->followerService->list();
+        $list = $this->followerService->list(true);
+        return $this->success(FollowerResource::collection($list), $list->count());
+    }
+
+    public function followers()
+    {
+        $list = $this->followerService->list(false);
         return $this->success(FollowerResource::collection($list), $list->count());
     }
 

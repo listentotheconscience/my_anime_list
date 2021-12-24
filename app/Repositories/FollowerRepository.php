@@ -19,8 +19,13 @@ class FollowerRepository extends Repository
         return $item->delete();
     }
 
-    public function getAllForCurrentUser()
+    public function getAllFollowsForCurrentUser()
     {
         return $this->model::where('follower_id', auth()->id())->get();
+    }
+
+    public function getAllFollowersForCurrentUser()
+    {
+        return $this->model::where('followed_id', auth()->id())->get();
     }
 }
