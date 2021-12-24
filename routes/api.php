@@ -30,8 +30,8 @@ use App\Http\Controllers\Manga\RatingController as MangaRatingController;
 
 Route::domain('mal.backoffice' . env('APP_URL'))->group(function () {
     /*
- *  Auth Group
- */
+     *  Auth Group
+     */
 
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/me', [AuthController::class, 'me'])->name('auth.me');
