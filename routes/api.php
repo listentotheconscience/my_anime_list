@@ -28,7 +28,7 @@ use App\Http\Controllers\Manga\RatingController as MangaRatingController;
 
 
 
-Route::domain('mal.backoffice.' . env('APP_URL'))->group(function () {
+Route::domain('mal.' . env('APP_URL'))->group(function () {
     /*
      *  Auth Group
      */
