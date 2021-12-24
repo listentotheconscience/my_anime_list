@@ -34,7 +34,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/me', [AuthController::class, 'me'])->name('auth.me');
 
     Route::post('/auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
-})->domain('my_anime_list' . env('APP_URL'));
+});
 
 /*
  *  Rating Group
@@ -49,7 +49,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::put('/anime/rating', [AnimeRatingController::class, 'update'])->name('rating.anime.update');
     Route::put('/manga/rating', [MangaRatingController::class, 'update'])->name('rating.manga.update');
-})->domain('my_anime_list' . env('APP_URL'));
+});
 
 /*
  *  List Group
@@ -66,7 +66,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::put('/anime/list', [AnimeTitleController::class, 'update'])->name('list.anime.upd');
     Route::put('/manga/list', [MangaTitleController::class, 'update'])->name('list.manga.upd');
-})->domain('my_anime_list' . env('APP_URL'));
+});
 
 /*
  *  Comment Group
@@ -81,7 +81,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::put('/anime/comment', [AnimeCommentController::class, 'update'])->name('comment.anime.upd');
     Route::put('/anime/comment', [MangaCommentController::class, 'update'])->name('comment.anime.upd');
-})->domain('my_anime_list' . env('APP_URL'));
+});
 
 /*
  *  Follower Group
@@ -95,7 +95,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/user/{id}/follow', [FollowerController::class, 'create'])->name('follower.follow');
 
     Route::delete('/user/{id}/follow', [FollowerController::class, 'delete'])->name('follower.unfollow');
-})->domain('my_anime_list' . env('APP_URL'));
+});
 
 /*
  *  Routes without auth
@@ -110,7 +110,7 @@ Route::group([], function () {
 
     Route::post('/auth/signup', [AuthController::class, 'signup'])->name('auth.signup');
     Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');
-})->domain('my_anime_list' . env('APP_URL'));
+});
 
 
 /*
