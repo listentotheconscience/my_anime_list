@@ -111,6 +111,14 @@ Route::group([], function () {
     Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');
 });
 
+/*
+ * Create manga, anime, mangaka, licensors, studios, producers
+ */
+Route::group(['middleware' => ['auth:sanctum', 'role.high']], function () {
+    Route::get('/test', function () {
+        return 'cool';
+    });
+});
 
 /*
  * Test Group

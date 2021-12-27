@@ -60,7 +60,7 @@ class Producer extends Resource
                 ->disableDownload(),
 
             Select::make('Country')
-                ->options(Countries::asArray())
+                ->options(Countries::asSelectArray())
         ];
     }
 
