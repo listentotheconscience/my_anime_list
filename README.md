@@ -84,4 +84,4 @@ If you want to change addresses you need to change it in docker-compose.yml
 - [ ] Add Ranobe support
 - [ ] Frieds
 - [ ] Messages
-- [ ] User roles like admin, moderator, etc
+- [x] User roles like admin, moderator, etc

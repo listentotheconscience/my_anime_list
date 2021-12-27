@@ -20,6 +20,6 @@ class ModeratorOrAdmin
             return $next($request);
         }
 
-        return;
+        return response('You don\'t have permissions', 403);
     }
 }
