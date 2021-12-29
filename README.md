@@ -76,3 +76,12 @@ If you want to change addresses you need to change it in docker-compose.yml
 - [x] Add Comments
 - [x] Followers
 - [x] User roles like admin, moderator, etc
+
+## P.S
+I'm writing this Dec 29, 2021. On the eve of the new year, \
+I wanted to finish this project, and today I did it. \
+I was REALLY glad to do this project. I learned a lot about Laravel, \
+backend, API. I would like to do more, but in this project it'll be superfluous. \
+Project support won't stop until I find and fix all bugs, and I would like to run it in production.
+
+Happy New 2022 Year!
