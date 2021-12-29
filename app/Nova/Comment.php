@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Text;
@@ -44,7 +45,7 @@ class Comment extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
 
-            BelongsTo::make('User', 'user')
+            BelongsTo::make('User', 'user', User::class)
                 ->creationRules('required')
                 ->updateRules('required', 'unique:{{resourceId}}'),
 
@@ -57,7 +58,9 @@ class Comment extends Resource
                 ->types([
                     Anime::class,
                     Manga::class
-                ])
+                ]),
+
+            BelongsToMany::make('likes')
         ];
     }
 

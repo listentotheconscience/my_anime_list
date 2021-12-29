@@ -58,8 +58,8 @@ class Licensor extends Resource
                 ->updateRules('unique:licensors,name, {{resourceId}}'),
 
             Image::make('Image')
-                ->disk('s3')
-                ->hideFromIndex()
+                ->disk('public')
+                ->path('licensor')
                 ->disableDownload(),
 
             Select::make('Country')

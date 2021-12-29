@@ -2,32 +2,29 @@
 
 namespace App\Nova;
 
-use App\Enums\Countries;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Testing\Fluent\Concerns\Has;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Image;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Mangaka extends Resource
+class Like extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Mangaka::class;
-
-    public static $group = 'Manga';
+    public static $model = \App\Models\Like::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -47,21 +44,15 @@ class Mangaka extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')
-                ->sortable(),
+            ID::make(__('ID'), 'id')->sortable(),
 
-            Text::make('Name')
-                ->sortable()
-                ->creationRules('unique:licensors,name')
-                ->updateRules('unique:licensors,name, {{resourceId}}'),
+            HasOne::make('User', 'user', User::class)
+                ->creationRules('required')
+                ->updateRules('required', 'unique:{{resourceId}}'),
 
-            Image::make('Image')
-                ->disk('public')
-                ->path('mangaka')
-                ->disableDownload(),
-
-            Select::make('Country')
-                ->options(Countries::asArray())
+            HasOne::make('Comment', 'comment', Comment::class)
+                ->creationRules('required')
+                ->updateRules('required', 'unique:{{resourceId}}')
         ];
     }
 

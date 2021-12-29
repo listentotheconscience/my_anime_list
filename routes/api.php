@@ -1,9 +1,14 @@
 <?php
 
 use App\Http\Controllers\Anime\AnimeController;
+use App\Http\Controllers\Anime\LicensorController;
+use App\Http\Controllers\Anime\StudioController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\Manga\MangaController;
+use App\Http\Controllers\Manga\MangakaController;
+use App\Http\Controllers\ProducerController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TitleController;
 use Illuminate\Support\Facades\Route;
@@ -80,6 +85,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::put('/anime/comment', [AnimeCommentController::class, 'update'])->name('comment.anime.upd');
     Route::put('/anime/comment', [MangaCommentController::class, 'update'])->name('comment.anime.upd');
+
+    Route::post('/comment/{id}/like', [CommentController::class, 'like'])->name('comment.like');
 });
 
 /*
@@ -107,6 +114,10 @@ Route::group([], function () {
     Route::get('/anime/{id}/comments', [AnimeCommentController::class, 'get'])->name('comments.anime.get');
     Route::get('/manga/{id}/comments', [MangaCommentController::class, 'get'])->name('comments.manga.get');
 
+    Route::get('/licensors/{id}', [LicensorController::class, 'get'])->name('licensor.get');
+    Route::get('/producers/{id}', [ProducerController::class, 'get'])->name('producers.get');
+    Route::get('/studios/{id}', [LicensorController::class, 'get'])->name('producers.get');
+
     Route::post('/auth/signup', [AuthController::class, 'signup'])->name('auth.signup');
     Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');
 });
@@ -115,9 +126,30 @@ Route::group([], function () {
  * Create manga, anime, mangaka, licensors, studios, producers
  */
 Route::group(['middleware' => ['auth:sanctum', 'role.high']], function () {
-    Route::get('/test', function () {
-        return 'cool';
-    });
+
+    Route::post('/licensors', [LicensorController::class, 'create'])->name('licensor.add');
+    Route::delete('/licensors/{id}', [LicensorController::class, 'delete'])->name('licensor.del');
+    Route::put('/licensors/{id}', [LicensorController::class, 'update'])->name('licensor.upd');
+
+    Route::post('/producers', [ProducerController::class, 'create'])->name('producers.add');
+    Route::delete('/producers/{id}', [ProducerController::class, 'delete'])->name('producers.del');
+    Route::put('/producers/{id}', [ProducerController::class, 'update'])->name('producers.upd');
+
+    Route::post('/studios', [StudioController::class, 'create'])->name('studios.add');
+    Route::delete('/studios/{id}', [StudioController::class, 'delete'])->name('studios.del');
+    Route::put('/studios/{id}', [StudioController::class, 'update'])->name('studios.upd');
+
+    Route::post('/mangaka', [MangakaController::class, 'create'])->name('mangaka.add');
+    Route::delete('/mangaka/{id}', [MangakaController::class, 'delete'])->name('mangaka.del');
+    Route::put('/mangaka/{id}', [MangakaController::class, 'update'])->name('mangaka.upd');
+
+    Route::post('/manga', [MangaController::class, 'create'])->name('manga.add');
+    Route::delete('/manga/{id}', [MangaController::class, 'delete'])->name('manga.del');
+    Route::put('/manga/{id}', [MangaController::class, 'update'])->name('manga.upd');
+
+    Route::post('/anime', [AnimeController::class, 'create'])->name('anime.add');
+    Route::delete('/anime/{id}', [AnimeController::class, 'delete'])->name('anime.del');
+    Route::put('/anime/{id}', [AnimeController::class, 'update'])->name('anime.upd');
 });
 
 /*

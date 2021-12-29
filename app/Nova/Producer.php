@@ -55,8 +55,8 @@ class Producer extends Resource
                 ->sortable(),
 
             Image::make('Image')
-                ->disk('s3')
-                ->hideFromIndex()
+                ->disk('public')
+                ->path('producer')
                 ->disableDownload(),
 
             Select::make('Country')

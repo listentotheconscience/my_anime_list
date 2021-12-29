@@ -95,7 +95,7 @@ class Manga extends Resource
 
             Image::make('Image')
                 ->prunable()
-                ->disk('s3')
+                ->disk('public')
                 ->disableDownload(),
 
             HasMany::make('Votes', 'Votes')

@@ -51,9 +51,9 @@ class User extends Resource
             ID::make()->sortable(),
 
             Image::make('Image')
-                ->disk('s3')
+                ->disk('public')
+                ->path('user')
                 ->prunable()
-                ->hideFromIndex()
                 ->disableDownload(),
 
             Text::make('Name')

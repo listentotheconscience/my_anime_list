@@ -94,7 +94,8 @@ class Anime extends Resource
 
             Image::make('Image')
                 ->prunable()
-                ->disk('s3')
+                ->disk('public')
+                ->path('anime')
                 ->disableDownload(),
 
             HasMany::make('Votes', 'Votes')

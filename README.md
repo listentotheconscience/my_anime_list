@@ -24,8 +24,8 @@ You can rate title, add title to your list, comment title
 
 ## Requirements
 
-PHP: 8.0 and higher \
-Docker-Compose: 3.5 and higher (in .yml)
+PHP: 8.0 or higher \
+Docker-Compose: 3.5 or higher (in .yml)
 
 ## Installation
 
@@ -40,7 +40,7 @@ I use Manjaro Linux, so I use pacman
 # pacman -S docker docker-compose
 ```
 
-3. Get AWS S3 storage and set the variables in .env file
+3. Set the variables in .env file
 ```bash
 $ cp .env.example .env
 ```
@@ -55,13 +55,8 @@ in .env file
    DB_DATABASE=your_database_name
    DB_USERNAME=your_database_user
    DB_PASSWORD=your_database_pass
-   AWS_ACCESS_KEY_ID=ACCESSKEYIDFROMAWS
-   AWS_SECRET_ACCESS_KEY=SECRETACCESSKEYFROMAWS
-   AWS_DEFAULT_REGION=your_bucket_region
-   AWS_BUCKET=your_bucket_name
+   FILESYSTEM_DRIVER=public
 ```
-
-<mark>Without AWS S3 it WILL NOT work!!</mark>
 
 4.Run
 ```bash
@@ -81,7 +76,5 @@ If you want to change addresses you need to change it in docker-compose.yml
 - [x] Add Comments
 - [x] Followers
 - [ ] Add Reviews
-- [ ] Add Ranobe support
-- [ ] Frieds
 - [ ] Messages
 - [x] User roles like admin, moderator, etc

@@ -11,6 +11,8 @@ class Licensor extends Model
 {
     use HasFactory, CastsEnums;
 
+    protected $guarded = ['id'];
+
     protected $casts = [
         'country' => Countries::class
     ];
