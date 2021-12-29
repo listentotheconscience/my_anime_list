@@ -75,6 +75,4 @@ If you want to change addresses you need to change it in docker-compose.yml
 ## In Future
 - [x] Add Comments
 - [x] Followers
-- [ ] Add Reviews
-- [ ] Messages
 - [x] User roles like admin, moderator, etc

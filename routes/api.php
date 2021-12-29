@@ -8,8 +8,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\Manga\MangaController;
 use App\Http\Controllers\Manga\MangakaController;
-use App\Http\Controllers\ProducerController;
-use App\Http\Controllers\TestController;
+use App\Http\Controllers\Anime\ProducerController;
 use App\Http\Controllers\TitleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Anime\CommentController as AnimeCommentController;
@@ -151,9 +150,3 @@ Route::group(['middleware' => ['auth:sanctum', 'role.high']], function () {
     Route::delete('/anime/{id}', [AnimeController::class, 'delete'])->name('anime.del');
     Route::put('/anime/{id}', [AnimeController::class, 'update'])->name('anime.upd');
 });
-
-/*
- * Test Group
- * Only Dev
- */
-//Route::get('/test',[TestController::class, 'test']);
